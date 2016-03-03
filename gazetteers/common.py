@@ -1,4 +1,4 @@
-from urllib2 import urlopen
+from urllib2 import urlopen, Request
 from urllib import urlencode, quote
 from qgis.core import QgsMessageLog
 
@@ -35,9 +35,10 @@ def prepareURL(url, params, query):
     newurl = url + "?" + params
     return newurl.replace("##searchstring##", quote(str(query)))
 
-def search(url):
+def search(url, headers):
     QgsMessageLog.logMessage("URL:" + url, "Gazetteer")
-    resp = urlopen(url)
+    req = Request(url, None, headers)
+    resp = urlopen(req)
     charset = resp.info().getparam('charset') or 'UTF-8'
     content = unicode(resp.read(), charset)
     return content

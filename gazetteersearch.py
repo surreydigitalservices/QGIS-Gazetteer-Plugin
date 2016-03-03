@@ -113,7 +113,7 @@ class gazetteerSearch:
         gazetteer_config = self.gazetteers[str(selectedGazetteer)]
         gazetteer = self.getGazetteerModule(gazetteer_config)
         url = common.prepareURL(gazetteer.url, gazetteer.params, searchString)
-        data = common.search(url)
+        data = common.search(url, gazetteer.headers)
 
         try:
             self.results = list(gazetteer.parseRequestResults(data, self.iface))
